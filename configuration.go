@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/containous/traefik/acme"
+	"github.com/containous/traefik/plugin"
 	"github.com/containous/traefik/provider"
 	"github.com/containous/traefik/types"
 )
@@ -38,6 +39,7 @@ type GlobalConfiguration struct {
 	MaxIdleConnsPerHost       int                     `description:"If non-zero, controls the maximum idle (keep-alive) to keep per-host.  If zero, DefaultMaxIdleConnsPerHost is used"`
 	InsecureSkipVerify        bool                    `description:"Disable SSL certificate verification"`
 	Retry                     *Retry                  `description:"Enable retry sending request if network error"`
+	Plugins                   plugin.Plugins          `description:"External plugins definition"`
 	Docker                    *provider.Docker        `description:"Enable Docker backend"`
 	File                      *provider.File          `description:"Enable File backend"`
 	Web                       *WebProvider            `description:"Enable Web backend"`
@@ -467,6 +469,7 @@ func NewTraefikConfiguration() *TraefikConfiguration {
 			ProvidersThrottleDuration: time.Duration(2 * time.Second),
 			MaxIdleConnsPerHost:       200,
 			CheckNewVersion:           true,
+			Plugins:                   plugin.Plugins{},
 		},
 		ConfigFile: "",
 	}
